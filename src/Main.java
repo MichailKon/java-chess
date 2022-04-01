@@ -11,15 +11,20 @@ public class Main {
         while (!board.checkLose(false) && !board.checkLose(true) && !board.checkPat(board.isWhite())) {
             System.out.println(board);
             System.out.println("Now " + (board.isWhite() ? "white" : "black") + " move");
-            List<String> line = Arrays.stream(sc.nextLine().split(" ")).toList();
+            List<String> line = Arrays.stream(sc.nextLine().split(" ")).map(x -> x.toLowerCase(Locale.ROOT)).toList();
             if (!(line.size() == 2 && line.get(0).length() == 2 && line.get(1).length() == 2) &&
-                    !(line.size() == 1 && (line.get(0).equals("OO") || line.get(0).equals("OOO")))) {
+                    !(line.size() == 1 && (line.get(0).equals("oo") || line.get(0).equals("ooo")))) {
                 System.out.println("Try again");
                 continue;
             }
             if (line.size() == 1) {
-                System.out.println("Castling isn't allowed");
-                return;
+                boolean shortCastling = line.get(0).equals("oo");
+                if (board.castling(shortCastling)) {
+                    System.out.println("Good mode");
+                } else {
+                    System.out.println("Can't do this move");
+                }
+                continue;
             }
             String from = line.get(0).toLowerCase(Locale.ROOT);
             String to = line.get(1).toLowerCase(Locale.ROOT);
@@ -28,7 +33,7 @@ public class Main {
             int y2 = to.charAt(0) - 'a';
             int x2 = to.charAt(1) - '0' - 1;
             if (board.makeMove(x1, y1, x2, y2)) {
-                if (board.getPiece(x2, y2) instanceof Pawn && (x2 == 0 || x2 == Board.size - 1)) {
+                if (board.getPiece(x2, y2) instanceof Pawn && (x2 == 0 || x2 == Board.SIZE - 1)) {
                     while (true) {
                         System.out.print("Enter symbol to promote: ");
                         String res = sc.nextLine();

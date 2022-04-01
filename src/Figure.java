@@ -1,6 +1,7 @@
 public abstract class Figure {
     private int x, y;
     private final boolean white;
+    private boolean moved = false;
 
     public static Figure createFigure(char c, boolean color) {
         return switch (c) {
@@ -22,6 +23,14 @@ public abstract class Figure {
 
     public Figure(boolean white) {
         this(0, 0, white);
+    }
+
+    public void setMoved(boolean moved) {
+        this.moved = moved;
+    }
+
+    public boolean isMoved() {
+        return moved;
     }
 
     public void setX(int x) {
