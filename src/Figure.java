@@ -2,15 +2,14 @@ public abstract class Figure {
     private int x, y;
     private final boolean white;
 
-    public Figure createFigure(char c, int x, int y) {
-        final boolean color = c != Character.toLowerCase(c);
+    public static Figure createFigure(char c, boolean color) {
         return switch (c) {
-            case 'b', 'B' -> new Bishop(x, y, color);
-            case 'k', 'K' -> new King(x, y, color);
-            case 'n', 'N' -> new Knight(x, y, color);
-            case 'p', 'P' -> new Pawn(x, y, color);
-            case 'q', 'Q' -> new Queen(x, y, color);
-            case 'r', 'R' -> new Rook(x, y, color);
+            case 'b', 'B' -> new Bishop(color);
+            case 'k', 'K' -> new King(color);
+            case 'n', 'N' -> new Knight(color);
+            case 'p', 'P' -> new Pawn(color);
+            case 'q', 'Q' -> new Queen(color);
+            case 'r', 'R' -> new Rook(color);
             default -> throw new IllegalStateException("Unexpected value: " + c);
         };
     }
@@ -19,6 +18,10 @@ public abstract class Figure {
         this.x = x;
         this.y = y;
         this.white = white;
+    }
+
+    public Figure(boolean white) {
+        this(0, 0, white);
     }
 
     public void setX(int x) {

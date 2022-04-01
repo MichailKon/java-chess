@@ -5,6 +5,10 @@ public class Knight extends Figure {
         super(i1, j1, b);
     }
 
+    public Knight(boolean b) {
+        super(b);
+    }
+
     @Override
     public boolean canMove(int x1, int y1) {
         int dx = abs(getX() - x1), dy = abs(getY() - y1);

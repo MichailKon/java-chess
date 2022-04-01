@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 public class Board {
     public static final int size = 8;
     Figure[][] board = new Figure[size][size];
-    boolean white;
+    private boolean white;
 
     Board() {
         white = true;
@@ -138,6 +138,10 @@ public class Board {
         return res;
     }
 
+    public boolean canMoveOrAttack(int x, int y, int x1, int y1) {
+        return canMove(x, y, x1, y1, true) || canMove(x, y, x1, y1, false);
+    }
+
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
@@ -168,7 +172,7 @@ public class Board {
                         if (i == i1 && j == j1) continue;
                         if (board[i][j] instanceof NoFigure) continue;
                         if (board[i][j].isWhite() != color) continue;
-                        if (canMove(i, j, i1, j1, true) || canMove(i, j, i1, j1, false)) return false;
+                        if (canMoveOrAttack(i, j, i1, j1)) return false;
                     }
                 }
             }
@@ -180,13 +184,17 @@ public class Board {
         if (isBadCoords(x, y)) return false;
         if (getPiece(x, y) instanceof NoFigure) return false;
         if (getPiece(x, y).isWhite() != white) return false;
-        if (canMove(x, y, x1, y1, false) || canMove(x, y, x1, y1, true)) {
+        if (canMoveOrAttack(x, y, x1, y1)) {
             setPiece(x1, y1, board[x][y]);
             setPiece(x, y, new NoFigure(x, y, false));
             white = !white;
             return true;
         }
         return false;
+    }
+
+    public void promote(int x, int y, Figure figure) {
+        setPiece(x, y, figure);
     }
 
     public boolean isWhite() {

@@ -3,6 +3,10 @@ public class Queen extends Figure {
         super(i1, j1, b);
     }
 
+    public Queen(boolean b) {
+        super(b);
+    }
+
     @Override
     public boolean canMove(int x1, int y1) {
         return getX() == x1 || getY() == y1 || getX() - getY() == x1 - y1 || getX() + getY() == x1 + y1;

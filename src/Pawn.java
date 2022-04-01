@@ -5,6 +5,10 @@ public class Pawn extends Figure {
         super(i1, j1, b);
     }
 
+    public Pawn(boolean b) {
+        super(b);
+    }
+
     @Override
     public boolean canMove(int x1, int y1) {
         if (getY() != y1) return false;

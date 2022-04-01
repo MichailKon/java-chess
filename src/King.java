@@ -5,6 +5,10 @@ public class King extends Figure {
         super(i1, j1, b);
     }
 
+    public King(boolean b) {
+        super(b);
+    }
+
     @Override
     public boolean canMove(int x1, int y1) {
         return abs(x1 - getX()) <= 1 && abs(y1 - getY()) <= 1;
