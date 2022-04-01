@@ -165,6 +165,29 @@ public class Board {
     }
 
     public boolean checkLose(boolean color) {
+        IntPair kingPos = getKingPos(color);
+        if (!underAttack(kingPos.getFirst(), kingPos.getSecond())) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                for (int i1 = 0; i1 < size; i1++) {
+                    for (int j1 = 0; j1 < size; j1++) {
+                        if (board[i][j] instanceof NoFigure) continue;
+                        if (board[i][j].isWhite() != color) continue;
+                        if (canMoveOrAttack(i, j, i1, j1)) return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean checkPat(boolean color) {
+        IntPair kingPos = getKingPos(color);
+        if (underAttack(kingPos.getFirst(), kingPos.getSecond())) {
+            return false;
+        }
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 for (int i1 = 0; i1 < size; i1++) {
